@@ -1,2 +1,2 @@
-# wowp-gallery
+# chagallpy
 Static, mostly JS-free web gallery based on WOWP framework
