@@ -11,6 +11,8 @@ class ImageInfo(object):
         self.path = path
         self._exif_data = {}
         self._meta_data = {}
+        self.previous = None
+        self.next = None
 
     @property
     def exif_data(self):
@@ -39,3 +41,6 @@ class ImageInfo(object):
             return datetime.datetime.strptime(exiftime, "%Y:%m:%d %H:%M:%S")
         ctime = int(os.path.getctime(self.path))
         return datetime.datetime.fromtimestamp(ctime)
+
+    def __repr__(self):
+        return ("ImageInfo('{0}')".format(self.path))

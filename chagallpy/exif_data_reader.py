@@ -10,7 +10,7 @@ class ExifDataReader(Actor):
         self.outports.append("image_out")
 
     def get_run_args(self):
-        image_info = self.inports["in"].pop()
+        image_info = self.inports["image_in"].pop()
         return (image_info, ), {}
 
     @classmethod
