@@ -11,7 +11,7 @@ setup(
     author='Jan Pipek',
     author_email='',
     url='https://github.com/janpipek/chagallpy',
-    install_requires = [ 'wowp' ],
+    install_requires = [ 'wowp', 'pillow' ],
     entry_points = {
         # 'console_scripts' : [
         #     'wowpage = wowpage.app:run_app'
