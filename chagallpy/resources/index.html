@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Album</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="gallery">
+        {% for image in images %}
+            <img src="{{ image.basename }}.thumb.jpg" />
+        {% endfor %}
+    </div>
+</body>
+</html>

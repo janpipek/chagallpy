@@ -11,7 +11,6 @@ class ThumbnailCreator(Actor):
         self.output_path = os.path.abspath(output_path)
         self.inports.append("image_in")
         self.outports.append("image_out")
-        # self.outports.append("thumbnail_path")
 
     def get_run_args(self):
         args = (self.inports["image_in"].pop(),)
@@ -22,11 +21,9 @@ class ThumbnailCreator(Actor):
     def run(cls, *args, **kwargs):
         image = args[0]
         infile = image.path
-        filename = os.path.basename(infile)
-        filename = os.path.splitext(filename)[0] + ".thumb" + os.path.splitext(filename)[1]
+        filename = image.basename + ".thumb.jpg"
         outfile = os.path.join(kwargs.get("output_path"), filename)
         cls.create_thumbnail(infile, outfile)
-        image.thumbnail_path = outfile
         return {
             "image_out": image
         }

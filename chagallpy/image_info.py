@@ -15,6 +15,10 @@ class ImageInfo(object):
         self.next = None
 
     @property
+    def basename(self):
+        return os.path.splitext(os.path.basename(self.path))[0].lower()
+
+    @property
     def exif_data(self):
         return self._exif_data
 
