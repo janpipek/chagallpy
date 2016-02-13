@@ -11,10 +11,10 @@ setup(
     author='Jan Pipek',
     author_email='',
     url='https://github.com/janpipek/chagallpy',
-    install_requires = [ 'wowp', 'pillow' ],
+    install_requires = [ 'wowp', 'pillow', "jinja2" ],
     entry_points = {
-        # 'console_scripts' : [
-        #     'wowpage = wowpage.app:run_app'
-        # ]
+        'console_scripts' : [
+             'chagall = chagallpy:generate'
+        ]
     }
 )
