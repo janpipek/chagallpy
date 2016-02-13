@@ -16,11 +16,14 @@ class ExifDataReader(Actor):
     @classmethod
     def run(cls, *args, **kwargs):
         image_info = args[0]
-        img = PIL.Image.open(image_info.path)
-        image_info.exif_data = {
-            PIL.ExifTags.TAGS[k]: v
-            for k, v in img._getexif().items()
-            if k in PIL.ExifTags.TAGS
-        }
+        try:
+            img = PIL.Image.open(image_info.path)
+            image_info.exif_data = {
+                PIL.ExifTags.TAGS[k]: v
+                for k, v in img._getexif().items()
+                if k in PIL.ExifTags.TAGS
+            }
+        except:
+            pass
         return {"image_out" : image_info}
 
