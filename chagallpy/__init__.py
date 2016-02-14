@@ -33,7 +33,7 @@ def generate():
     source.inports["path"] += parser.outports["source_path"]
 
     # Read all data about them & make thumbnails
-    data_chain = Chain.create_prototype("chain", [ExifDataReader, MetaDataReader, ThumbnailCreator(output_path)])
+    data_chain = Chain.create_prototype("chain", [ExifDataReader, MetaDataReader])
     data_map = Map(data_chain)
     data_map.inports["inp"] += source.outports["images"]
 
@@ -54,7 +54,8 @@ def generate():
 
     # Copy & resize all images
     image_resizer = ImageResizer.create_prototype(output_path=output_path, max_height=1600, max_width=1600)
-    image_resizer_map = Map(image_resizer)
+    image_resizer_chain = Chain.create_prototype("image_resizer_chain", [image_resizer, ThumbnailCreator(output_path)])
+    image_resizer_map = Map(image_resizer_chain)
     image_resizer_map.inports["inp"] += gallery_info_reader.outports["images_out"]
 
     # Create all image pages

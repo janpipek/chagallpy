@@ -11,9 +11,7 @@ class ImageResizer(Actor):
         self.inports.append("image_in")
         self.max_width = max_width
         self.max_height = max_height
-        self.outports.append("image_out")
-        # self.inports.append("max_height")
-        # self.inports.append("max_width")
+        self.outports.append("out_file")
 
     def get_run_args(self):
         return (self.inports["image_in"].pop(),), {
@@ -30,18 +28,22 @@ class ImageResizer(Actor):
         infile = image.path
         filename = image.basename + ".jpg"
         outfile = os.path.join(kwargs.get("output_path"), filename)
-        cls.resize_image(infile, outfile, max_width, max_height)
+        cls.resize_image(infile, outfile, max_width, max_height, orientation=image.exif_orientation)
         return {
-            "image_out": image
+            "out_file": outfile
         }
 
     @classmethod
-    def resize_image(cls, infile, outfile, max_width=1600, max_height=1600, **kwargs):
+    def resize_image(cls, infile, outfile, max_width=1600, max_height=1600, orientation=1, **kwargs):
         if os.path.isfile(outfile):
             return    # Unless forced
         os.makedirs(os.path.dirname(outfile), exist_ok=True)
 
         img = Image.open(infile)
+
+        if orientation == 3:   img = img.transpose(Image.ROTATE_180)
+        elif orientation == 6: img = img.transpose(Image.ROTATE_270)
+        elif orientation == 8: img = img.transpose(Image.ROTATE_90)
 
         scale = 1.0
         if img.width > max_width:

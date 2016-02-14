@@ -58,5 +58,12 @@ class ImageInfo(object):
         ctime = int(os.path.getctime(self.path))
         return datetime.datetime.fromtimestamp(ctime)
 
+    @property
+    def exif_orientation(self):
+        if "Orientation" in self.exif_data:
+            return self.exif_data["Orientation"]
+        else:
+            return 0
+
     def __repr__(self):
         return ("ImageInfo('{0}')".format(self.path))
