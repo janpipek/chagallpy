@@ -14,6 +14,7 @@ def generate():
     from chagallpy.meta_data_reader import MetaDataReader
     from chagallpy.image_sorter import ImageSorter
     from chagallpy.album_page_creator import AlbumPageCreator
+    from chagallpy.image_page_creator import ImagePageCreator
 
     output_path = "./build"
 
@@ -32,6 +33,11 @@ def generate():
     # Create album page
     album_creator = AlbumPageCreator(output_path)
     album_creator.inports["images"] += sorter.outports["images_out"]
+
+    # Create all image pages
+    image_page_creator = ImagePageCreator.create_prototype(output_path)
+    image_page_map = Map(image_page_creator)
+    image_page_map.inports["inp"] += sorter.outports["images_out"]
 
     workflow = source.get_workflow()
     images = workflow(path=".")
