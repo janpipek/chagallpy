@@ -13,6 +13,18 @@ class ImageInfo(object):
         self._meta_data = {}
         self.previous = None
         self.next = None
+        self.gallery_info = None
+
+        self.index = 0
+        self.total_count = 0
+
+    @property
+    def title(self):
+        if "title" in self.meta_data:
+            return self.meta_data["title"]
+        else:
+            return self.basename
+
 
     @property
     def basename(self):
