@@ -28,7 +28,7 @@ class AlbumPageCreator(Actor):
     def create_page(cls, images, outfile, **kwargs):
         basedir = os.path.dirname(os.path.abspath(__file__))
 
-        jinja_loader = jinja2.FileSystemLoader(os.path.join(basedir, "resources"))
+        jinja_loader = jinja2.FileSystemLoader(os.path.join(basedir, "templates"))
         env = jinja2.Environment(loader=jinja_loader)
 
         template = env.get_template("index.html")
