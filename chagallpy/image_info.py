@@ -55,7 +55,9 @@ class ImageInfo(object):
         if "date" in self.meta_data:
             return datetime.datetime.strptime(self.meta_data["date"], "%d/%m/%Y")
         if "DateTimeOriginal" in self._exif_data:
-            exiftime = self._exif_data["DateTimeOriginal"][0]
+            exiftime = self._exif_data["DateTimeOriginal"]
+            if not isinstance(exiftime, str):
+                exiftime = exiftime[0]
             return datetime.datetime.strptime(exiftime, "%Y:%m:%d %H:%M:%S")
         if "DateTime" in self._exif_data:
             exiftime = self._exif_data["DateTime"]
