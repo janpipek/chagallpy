@@ -15,6 +15,7 @@ class ResourceCopy(Actor):
     @classmethod
     def run(cls, *args, **kwargs):
         output_path = args[0]
+        os.makedirs(output_path, exist_ok=True)
         resource_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resources")
         files = os.listdir(resource_dir)
         print("Copying:", files)

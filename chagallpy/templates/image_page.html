@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>{{ image.gallery_info.title }} :: {{ image.title }}</title>
     <link href="style.css" rel="stylesheet" />
     <script src="gallery.js"></script>
 </head>
-<body class="image-page"><div class="image-frame"><div class="image-toolbar">
+<body class="image-page"><div class="image-toolbar">
             <a class='arrow' id='home' title="Home" href='index.html'>&#9632;</a>
             {% if image.previous %}
                 <a class='arrow' id='left' title="Previous" href='{{ image.previous.basename }}.html'>&#9664;</a>
@@ -22,5 +22,5 @@
             {% if image.title %}
                 <span>{{ image.title }}</span>
             {% endif %}
-        </div><img class="image-itself" src="{{ image.basename }}.jpg" /></div></body>
+        </div><img class="image-itself" src="{{ image.basename }}.jpg" /></body>
 </html>

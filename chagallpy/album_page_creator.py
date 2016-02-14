@@ -34,7 +34,7 @@ class AlbumPageCreator(Actor):
         template = env.get_template("index.html")
 
         with codecs.open(outfile, "w", encoding="utf-8") as fout:
-            fout.write(template.render(images=images))
+            fout.write(template.render(images=images, gallery={"title" : "Unknown gallery"}))
 
 
 

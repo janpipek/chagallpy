@@ -6,7 +6,24 @@ a
 body
 {
     margin: 0;
+    font-family: "Linux Libertine O", Georgia, serif;
+    font-size: 135%;
 }
+h1
+{
+    margin: 0.7em auto;
+    width: 90%;
+
+    text-align: center;
+    margin-top: 1.5em;
+    margin-bottom: 0.2em;
+
+    color: #333;
+    max-width: 20em;
+    margin-bottom: 1.2em;
+    font-size: 170%;
+}
+
 
 /* Gallery page */
 .gallery-page .gallery-frame
@@ -32,74 +49,79 @@ body
 .image-page
 {
     height: 100%;
-    margin: 10px;
+    margin: 0px;
     text-align: center;
     overflow: hidden;
 }
 
-.image-page .image-frame
+/* .image-page
 {
     display: block;
-    /* position: relative; */
+    position: relative;
+    top: 10px;
 
-    height: calc(100% - 20px);
     max-height: calc(100% - 20px) !important;
     max-width: calc(100% - 20px);
     width: auto;
+    height: auto !important;
 
     margin: auto;
     text-align: center;
     vertical-align: top;
-}
-.image-page .image-frame .image-itself
+}*/
+
+.image-page  .image-itself
 {
+    max-height: calc(100vh - 20px);
+    max-width: calc(100vw - 20px);
     display: inline-block;
-    max-height: 100%;
-    max-width: 100%;
+    top: 10px;
+    /* bottom: 10px; */
+    height: auto;
     vertical-align: top;
     position: relative;
     box-shadow: 0px 0px 10px #888;
 }
-.image-page .image-frame .image-toolbar
+.image-page  .image-toolbar
 {
     color: white;
     font-family: Ubuntu, helvetica, sans-serif;
     opacity: 0.3;
     padding: 0;
     vertical-align: top;
-    font-size: 0;
+    /* font-size: 0; */
     width: 0px;
     height: 0px;
     white-space: nowrap;
     display: inline-block;
-    top: 1px;
+    top: 11px;
     left: 1px;
     overflow: visible;
     z-index: 10;
     position: relative;
 }
-.image-page .image-frame .image-toolbar > *
+.image-page  .image-toolbar > *
 {
     background-color: #aaa;
     border: 1px solid #ccc;
     min-width: 1.4em;
     height: 1.4em;
     display: inline-block;
-    margin-right: 1px;
+    /*margin-right: 1px;*/
     padding: 4px;
     vertical-align: middle;
     text-align: center;
     font-size: 12pt;
 }
-.image-page .image-frame .image-toolbar:hover
+.image-page .image-toolbar:hover
 {
     opacity: 1;
 }
-.image-page .image-frame .image-toolbar *:hover
+.image-page  .image-toolbar *:hover
 {
     background-color: black;
 }
-.image-page .image-frame .image-toolbar a.arrow
+.image-page  .image-toolbar a.arrow
 {
     font-weight: bold;
     color: white;
