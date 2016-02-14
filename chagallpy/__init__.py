@@ -16,15 +16,20 @@ def generate():
     from chagallpy.album_page_creator import AlbumPageCreator
     from chagallpy.image_page_creator import ImagePageCreator
     from chagallpy.resource_copy import ResourceCopy
+    from chagallpy.gallery_info_reader import GalleryInfoReader
+    from chagallpy.argument_parser import ArgumentParser
 
-    output_path = "./build"
+    parser = ArgumentParser()
+
+    output_path = "./build"    # TODO: remove
 
     # Do the initial setup
     resource_copy = ResourceCopy()
-    resource_copy.get_workflow()(path_in=output_path)
+    resource_copy.inports["path_in"] += parser.outports["output_path"]
 
     # Get relevant images
     source = ImageCollector()
+    source.inports["path"] += parser.outports["source_path"]
 
     # Read all data about them & make thumbnails
     data_chain = Chain.create_prototype("chain", [ExifDataReader, MetaDataReader, ThumbnailCreator(output_path)])
@@ -35,14 +40,21 @@ def generate():
     sorter = ImageSorter()
     sorter.inports["images_in"] += data_map.outports["out"]
 
+    # Get general gallery information
+    gallery_info_reader = GalleryInfoReader()
+    gallery_info_reader.inports["images_in"] += sorter.outports["images_out"]
+    gallery_info_reader.inports["path_in"] += parser.outports["source_path"]
+
     # Create album page
     album_creator = AlbumPageCreator(output_path)
-    album_creator.inports["images"] += sorter.outports["images_out"]
+    album_creator.inports["images"] += gallery_info_reader.outports["images_out"]
+    album_creator.inports["gallery_info"] += gallery_info_reader.outports["gallery_info"]
+    album_creator.inports["output_path"] += parser.outports["output_path"]
 
     # Create all image pages
     image_page_creator = ImagePageCreator.create_prototype(output_path)
     image_page_map = Map(image_page_creator)
-    image_page_map.inports["inp"] += sorter.outports["images_out"]
+    image_page_map.inports["inp"] += gallery_info_reader.outports["images_out"]
 
-    workflow = source.get_workflow()
-    images = workflow(path=".")
+    workflow = parser.get_workflow()
+    images = workflow(argv=sys.argv)
