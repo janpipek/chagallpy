@@ -34,6 +34,7 @@ For each `image.jpg`, a file `image.yaml` is read with the following options:
 
 ## Usage
 
-There is an executable called `chagall` that does all the job. Currently, it places the 
+There is an executable called `chagall` that does all the job. Currently, it starts from
+current directory and places everything in `build/` output directory.
 
 
