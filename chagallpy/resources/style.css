@@ -1,104 +1,105 @@
-.gallery
+/* Universal */
+a
 {
-    max-width: 1300;
-    line-height: 257px;
-    margin: auto;
+    text-decoration: none;
 }
-.gallery a
+body
 {
     margin: 0;
 }
-.gallery a img
+
+/* Gallery page */
+.gallery-page .gallery-frame
 {
-    margin: 1px;
+    max-width: 1300;
+    line-height: 1px;
+    font-size: 0px;
+    margin: auto;
 }
-.gallery a:hover img
+.gallery-page .gallery-frame a.thumb
+{
+    display: inline-block;
+    margin: 1px;
+    height: 256px;
+    width: 256px;
+}
+.gallery-page .gallery-frame a:hover img
 {
     opacity: 0.4;
 }
-body.full-image
+
+/* Image page */
+.image-page
 {
     height: 100%;
     margin: 10px;
     text-align: center;
     overflow: hidden;
 }
-.image-frame
+
+.image-page .image-frame
 {
+    display: block;
+    /* position: relative; */
+
     height: calc(100% - 20px);
     max-height: calc(100% - 20px) !important;
     max-width: calc(100% - 20px);
-    text-align: center;
-    /** position: fixed; **/
-    /** height: auto !important; **/
-    margin: auto;
     width: auto;
-    position: relative;
-    display: inline-block;
+
+    margin: auto;
     text-align: center;
     vertical-align: top;
 }
-.image-frame .image-itself
+.image-page .image-frame .image-itself
 {
     display: inline-block;
     max-height: 100%;
     max-width: 100%;
     vertical-align: top;
     position: relative;
-}
-.full-image > .image-itself
-{
-    margin: auto;
-    /* max-height: calc(100% - 20px);
-    max-width: calc(100% - 20px); */
-    display: block;
-}
-.full-image .image-itself
-{
     box-shadow: 0px 0px 10px #888;
 }
-.image-toolbar
+.image-page .image-frame .image-toolbar
 {
-    /* top: 0px;
-    left: 0px; */
     color: white;
     font-family: Ubuntu, helvetica, sans-serif;
     opacity: 0.3;
     padding: 0;
-    /** font-size: 100%; **/
     vertical-align: top;
-    font-size: 80%;
+    font-size: 0;
     width: 0px;
     height: 0px;
     white-space: nowrap;
-    /* position: relative; */
     display: inline-block;
-    top: 0px;
+    top: 1px;
+    left: 1px;
     overflow: visible;
     z-index: 10;
     position: relative;
 }
-.image-toolbar > *
+.image-page .image-frame .image-toolbar > *
 {
     background-color: #aaa;
-    border: 1px solid #444;
+    border: 1px solid #ccc;
     min-width: 1.4em;
     height: 1.4em;
     display: inline-block;
-    margin: 1px;
+    margin-right: 1px;
     padding: 4px;
     vertical-align: middle;
     text-align: center;
+    font-size: 12pt;
 }
-.image-toolbar:hover
+.image-page .image-frame .image-toolbar:hover
 {
     opacity: 1;
 }
-.image-toolbar *:hover
+.image-page .image-frame .image-toolbar *:hover
 {
     background-color: black;
 }
-a.arrow
+.image-page .image-frame .image-toolbar a.arrow
 {
     font-weight: bold;
     color: white;

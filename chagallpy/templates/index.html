@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gallery</title>
+    <title>{{ gallery.title }}</title>
     <link href="style.css" rel="stylesheet" />
 </head>
-<body>
-    <div class="gallery">
+<body class="gallery-page">
+    <h1>{{ gallery.title }}</h1>
+    <div class="gallery-frame">
         {% for image in images %}
-            <a href="{{ image.basename }}.html" title="{{ image.title }}"><img src="{{ image.basename }}.thumb.jpg" /></a>
+            <a href="{{ image.basename }}.html" title="{{ image.title }}" class="thumb"><img src="{{ image.basename }}.thumb.jpg" /></a>
         {% endfor %}
     </div>
 </body>

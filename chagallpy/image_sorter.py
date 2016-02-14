@@ -21,5 +21,7 @@ class ImageSorter(Actor):
                     image.previous = images[index - 1]
                 if index < len(images) - 1:
                     image.next = images[index + 1]
+            image.total_count = len(images)
+            image.index = index + 1
         return {"images_out" : images}
 
