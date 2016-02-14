@@ -30,7 +30,8 @@ class ThumbnailCreator(Actor):
 
     @classmethod
     def create_thumbnail(cls, infile, outfile, **kwargs):
-        print(outfile)
+        if os.path.isfile(outfile):
+            return    # Unless forced
         os.makedirs(os.path.dirname(outfile), exist_ok=True)
 
         size = kwargs.get("size", cls.SIZE)

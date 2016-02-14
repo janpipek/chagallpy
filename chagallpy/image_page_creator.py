@@ -23,7 +23,6 @@ class ImagePageCreator(Actor):
         output_path = kwargs.get("output_path")
         outfile = os.path.join(output_path, image.basename + ".html")
         cls.create_page(image, outfile)
-        cls.copy_image(image, output_path)
         return {"image_out" : image}
 
     @classmethod
@@ -38,7 +37,3 @@ class ImagePageCreator(Actor):
         with codecs.open(outfile, "w", encoding="utf-8") as fout:
             fout.write(template.render(image=image))
 
-    @classmethod
-    def copy_image(cls, image, output_path):
-        outfile = os.path.join(output_path, image.basename + ".jpg")
-        shutil.copy(image.path, outfile)

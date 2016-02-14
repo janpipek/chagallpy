@@ -18,6 +18,7 @@ def generate():
     from chagallpy.resource_copy import ResourceCopy
     from chagallpy.gallery_info_reader import GalleryInfoReader
     from chagallpy.argument_parser import ArgumentParser
+    from chagallpy.image_resizer import ImageResizer
 
     parser = ArgumentParser()
 
@@ -50,6 +51,11 @@ def generate():
     album_creator.inports["images"] += gallery_info_reader.outports["images_out"]
     album_creator.inports["gallery_info"] += gallery_info_reader.outports["gallery_info"]
     album_creator.inports["output_path"] += parser.outports["output_path"]
+
+    # Copy & resize all images
+    image_resizer = ImageResizer.create_prototype(output_path=output_path, max_height=1600, max_width=1600)
+    image_resizer_map = Map(image_resizer)
+    image_resizer_map.inports["inp"] += gallery_info_reader.outports["images_out"]
 
     # Create all image pages
     image_page_creator = ImagePageCreator.create_prototype(output_path)
