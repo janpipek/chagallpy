@@ -1,4 +1,7 @@
 from wowp.components import Actor
+import yaml
+import os
+import codecs
 
 
 class MetaDataReader(Actor):
@@ -13,6 +16,8 @@ class MetaDataReader(Actor):
     @classmethod
     def run(cls, *args, **kwargs):
         image_info = args[0]
-        image_info.meta_data = {"processed": True}
-        # ... Do the thing
+        yaml_path = os.path.splitext(image_info.path)[0] + ".yaml"
+        if os.path.isfile(yaml_path):
+            with codecs.open(yaml_path, "r", encoding="utf-8") as yaml_f:
+                image_info.meta_data.update(yaml.load(yaml_f))
         return {"image_out": image_info}
