@@ -1,0 +1,106 @@
+.gallery
+{
+    max-width: 1300;
+    line-height: 257px;
+    margin: auto;
+}
+.gallery a
+{
+    margin: 0;
+}
+.gallery a img
+{
+    margin: 1px;
+}
+.gallery a:hover img
+{
+    opacity: 0.4;
+}
+body.full-image
+{
+    height: 100%;
+    margin: 10px;
+    text-align: center;
+    overflow: hidden;
+}
+.image-frame
+{
+    height: calc(100% - 20px);
+    max-height: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px);
+    text-align: center;
+    /** position: fixed; **/
+    /** height: auto !important; **/
+    margin: auto;
+    width: auto;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+.image-frame .image-itself
+{
+    display: inline-block;
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: top;
+    position: relative;
+}
+.full-image > .image-itself
+{
+    margin: auto;
+    /* max-height: calc(100% - 20px);
+    max-width: calc(100% - 20px); */
+    display: block;
+}
+.full-image .image-itself
+{
+    box-shadow: 0px 0px 10px #888;
+}
+.image-toolbar
+{
+    /* top: 0px;
+    left: 0px; */
+    color: white;
+    font-family: Ubuntu, helvetica, sans-serif;
+    opacity: 0.3;
+    padding: 0;
+    /** font-size: 100%; **/
+    vertical-align: top;
+    font-size: 80%;
+    width: 0px;
+    height: 0px;
+    white-space: nowrap;
+    /* position: relative; */
+    display: inline-block;
+    top: 0px;
+    overflow: visible;
+    z-index: 10;
+    position: relative;
+}
+.image-toolbar > *
+{
+    background-color: #aaa;
+    border: 1px solid #444;
+    min-width: 1.4em;
+    height: 1.4em;
+    display: inline-block;
+    margin: 1px;
+    padding: 4px;
+    vertical-align: middle;
+    text-align: center;
+}
+.image-toolbar:hover
+{
+    opacity: 1;
+}
+.image-toolbar *:hover
+{
+    background-color: black;
+}
+a.arrow
+{
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}

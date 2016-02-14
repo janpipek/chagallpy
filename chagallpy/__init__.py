@@ -15,8 +15,13 @@ def generate():
     from chagallpy.image_sorter import ImageSorter
     from chagallpy.album_page_creator import AlbumPageCreator
     from chagallpy.image_page_creator import ImagePageCreator
+    from chagallpy.resource_copy import ResourceCopy
 
     output_path = "./build"
+
+    # Do the initial setup
+    resource_copy = ResourceCopy()
+    resource_copy.get_workflow()(path_in=output_path)
 
     # Get relevant images
     source = ImageCollector()
