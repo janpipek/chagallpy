@@ -31,6 +31,8 @@ Available EXIF data are read.
 For each `image.jpg`, a file `image.yaml` is read with the following options:
 
 * title
+* place
+* date (dd/mm/YYYY)
 
 ## Usage
 

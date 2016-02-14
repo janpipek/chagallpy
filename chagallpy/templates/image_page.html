@@ -22,6 +22,10 @@
             {% if image.title %}
                 <span>{{ image.title }}</span>
             {% endif %}
-            <span>{{ image.date_time.strftime("%d/%m/%Y") }}</span>
+            <span>{{ image.date_time.strftime("%d/%m/%Y") -}}
+                {%- if image.place -%}
+                , {{ image.place }}
+                {% endif %}
+            </span>
         </div><img class="image-itself" src="{{ image.basename }}.jpg" /></body>
 </html>

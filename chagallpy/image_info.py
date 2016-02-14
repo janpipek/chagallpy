@@ -52,6 +52,8 @@ class ImageInfo(object):
 
         :rtype datetime.datetime
         """
+        if "date" in self.meta_data:
+            return datetime.datetime.strptime(self.meta_data["date"], "%d/%m/%Y")
         if "DateTimeOriginal" in self._exif_data:
             exiftime = self._exif_data["DateTimeOriginal"][0]
             return datetime.datetime.strptime(exiftime, "%Y:%m:%d %H:%M:%S")
