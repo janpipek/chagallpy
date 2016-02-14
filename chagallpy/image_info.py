@@ -52,11 +52,18 @@ class ImageInfo(object):
 
         :rtype datetime.datetime
         """
+        if "DateTimeOriginal" in self._exif_data:
+            exiftime = self._exif_data["DateTimeOriginal"][0]
+            return datetime.datetime.strptime(exiftime, "%Y:%m:%d %H:%M:%S")
         if "DateTime" in self._exif_data:
             exiftime = self._exif_data["DateTime"]
             return datetime.datetime.strptime(exiftime, "%Y:%m:%d %H:%M:%S")
         ctime = int(os.path.getctime(self.path))
         return datetime.datetime.fromtimestamp(ctime)
+
+    @property
+    def place(self):
+        return self.meta_data.get("place", None)
 
     @property
     def exif_orientation(self):
