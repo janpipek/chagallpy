@@ -6,6 +6,7 @@ import sys
 def generate():
     from wowp.actors.experimental import Chain
     from wowp.actors.mapreduce import Map
+    from wowp.util import ConstructorWrapper
 
     from chagallpy.thumbnail_creator import ThumbnailCreator
     from chagallpy.image_sorter import ImageSorter
@@ -33,7 +34,7 @@ def generate():
     source.inports["path"] += parser.outports["source_path"]
 
     # Read all data about them & make thumbnails
-    data_chain = Chain.create_prototype("chain", [ExifDataReader, MetaDataReader])
+    data_chain = ConstructorWrapper(Chain, "chain", [ExifDataReader, MetaDataReader])
     data_map = Map(data_chain)
     data_map.inports["inp"] += source.outports["images"]
 
@@ -53,13 +54,14 @@ def generate():
     album_creator.inports["output_path"] += parser.outports["output_path"]
 
     # Copy & resize all images
-    image_resizer = ImageResizer.create_prototype(output_path=output_path, max_height=1600, max_width=1600)
-    image_resizer_chain = Chain.create_prototype("image_resizer_chain", [image_resizer, ThumbnailCreator(output_path)])
+    image_resizer = ConstructorWrapper(ImageResizer, output_path=output_path, max_height=1600, max_width=1600)
+    image_thumbnailer = ConstructorWrapper(ThumbnailCreator, output_path=output_path)
+    image_resizer_chain = ConstructorWrapper(Chain, "image_resizer_chain", [image_resizer, image_thumbnailer])
     image_resizer_map = Map(image_resizer_chain)
     image_resizer_map.inports["inp"] += gallery_info_reader.outports["images_out"]
 
     # Create all image pages
-    image_page_creator = ImagePageCreator.create_prototype(output_path)
+    image_page_creator = ConstructorWrapper(ImagePageCreator, output_path)
     image_page_map = Map(image_page_creator)
     image_page_map.inports["inp"] += gallery_info_reader.outports["images_out"]
 
