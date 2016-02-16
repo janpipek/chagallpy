@@ -1,4 +1,4 @@
-from wowp import Actor
+from wowp.components import Actor
 import os
 from PIL import Image
 import shutil
@@ -36,8 +36,10 @@ class ImageResizer(Actor):
     @classmethod
     def resize_image(cls, infile, outfile, max_width=1600, max_height=1600, orientation=1, **kwargs):
         if os.path.isfile(outfile):
+            print("Not resizing image {0}...".format(outfile))
             return    # Unless forced
         os.makedirs(os.path.dirname(outfile), exist_ok=True)
+        print("Resizing image {0}...".format(outfile))
 
         img = Image.open(infile)
 

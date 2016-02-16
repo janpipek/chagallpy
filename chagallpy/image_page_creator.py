@@ -1,8 +1,7 @@
-from wowp import Actor
+from wowp.components import Actor
 import os
 import jinja2
 import codecs
-import shutil
 
 
 class ImagePageCreator(Actor):
@@ -27,6 +26,7 @@ class ImagePageCreator(Actor):
 
     @classmethod
     def create_page(cls, image, outfile, **kwargs):
+        print("Creating image page {0}...".format(outfile))
         basedir = os.path.dirname(os.path.abspath(__file__))
 
         jinja_loader = jinja2.FileSystemLoader(os.path.join(basedir, "templates"))

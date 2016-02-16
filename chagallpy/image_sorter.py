@@ -1,4 +1,4 @@
-from wowp import Actor
+from wowp.components import Actor
 
 
 class ImageSorter(Actor):

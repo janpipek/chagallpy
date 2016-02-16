@@ -16,7 +16,8 @@ class ImageCollector(Actor):
     @classmethod
     def run(cls, *args, **kwargs):
         path = args[0]
-        files = reglob(path, ".*\.[Jj][Pp][Ee]?[Gg]")
+        print("Collecting images from {0}...".format(path))
+        files = reglob(path, ".*\.[Jj][Pp][Ee]?[Gg]$")
         images = [ImageInfo(f) for f in files]
         return {"images" : images}
 

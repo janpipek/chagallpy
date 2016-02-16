@@ -36,6 +36,8 @@ class AlbumPageCreator(Actor):
 
         template = env.get_template("index.html")
 
+        print("Creating album page index.html...")
+
         with codecs.open(outfile, "w", encoding="utf-8") as fout:
             fout.write(template.render(images=images, gallery=gallery_info))
 
