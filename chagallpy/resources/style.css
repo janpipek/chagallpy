@@ -28,7 +28,7 @@ h1
 /* Gallery page */
 .gallery-page .gallery-frame
 {
-    max-width: 1300;
+    max-width: 1300px;
     line-height: 1px;
     font-size: 0px;
     margin: auto;
