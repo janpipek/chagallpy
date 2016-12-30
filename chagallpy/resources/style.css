@@ -127,3 +127,14 @@ h1
     color: white;
     text-decoration: none;
 }
+
+.image-page .toolbar-container .toolbar-detail
+{
+    display: none;
+    overflow: display;
+}
+
+.image-page .toolbar-container:hover .toolbar-detail
+{
+    display: block;
+}
