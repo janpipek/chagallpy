@@ -9,7 +9,7 @@
     <h1>{{ gallery.title }}</h1>
     <div class="gallery-frame">
         {% for image in images %}
-            <a href="{{ image.basename }}.html" title="{{ image.title }}" class="thumb"><img src="{{ image.basename }}.thumb.jpg" /></a>
+            <a href="{{ image.basename }}.html" title="{{ image.title }}" class="thumb"><img src="{{ image.basename }}.thumb.jpg" width="256" height="256" /></a>
         {% endfor %}
     </div>
 </body>
