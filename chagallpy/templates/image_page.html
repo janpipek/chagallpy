@@ -27,5 +27,17 @@
                 , {{ image.place }}
                 {% endif %}
             </span>
-        </div><img class="image-itself" src="{{ image.basename }}.jpg" /></body>
+            {% if image.exif and False %}
+                <span class="toolbar-container">
+                    <!-- {{ image.exif_data }} -->
+                    <!-- TODO: Implement somehow -->
+                </span>
+            {% endif %}
+        </div><img class="image-itself" src="{{ image.basename }}.jpg" id="image-itself"/>
+        {% if image.exif %}
+            <span class="toolbar-container">
+                <!-- {{ image.exif_data }} -->
+            </span>
+        {% endif %}
+</body>
 </html>

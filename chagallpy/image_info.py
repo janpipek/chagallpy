@@ -2,6 +2,19 @@ import os
 import datetime
 
 
+class ExifProxy(object):
+    """Object accessing EXIF info in a friendly, @property-friendly way.
+
+    TODO: Work in progress
+    """
+    def __init__(self, a_dict):
+        self._data = a_dict
+
+    @property
+    def camera(self):
+        return self._data["Model"]
+
+
 class ImageInfo(object):
     """Container for image information.
 
@@ -10,6 +23,7 @@ class ImageInfo(object):
     def __init__(self, path):
         self.path = path
         self._exif_data = {}
+        self.exif = None
         self._meta_data = {}
         self.previous = None
         self.next = None
@@ -32,11 +46,16 @@ class ImageInfo(object):
 
     @property
     def exif_data(self):
+        """Original EXIF data.
+
+        :rtype: dict
+        """
         return self._exif_data
 
     @exif_data.setter
     def exif_data(self, value):
         self._exif_data = value
+        self.exif = ExifProxy(self._exif_data)
 
     @property
     def meta_data(self):

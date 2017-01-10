@@ -34,7 +34,7 @@ class ImageResizer(Actor):
         }
 
     @classmethod
-    def resize_image(cls, infile, outfile, max_width=1600, max_height=1600, orientation=1, **kwargs):
+    def resize_image(cls, infile, outfile, max_width=1600, max_height=1600, preserve_exif=True, orientation=1, **kwargs):
         if os.path.isfile(outfile):
             print("Not resizing image {0}...".format(outfile))
             return    # Unless forced
@@ -42,6 +42,14 @@ class ImageResizer(Actor):
         print("Resizing image {0}...".format(outfile))
 
         img = Image.open(infile)
+
+        exif = None
+
+        if preserve_exif:
+            try:
+                exif = img.info['exif']
+            except KeyError:
+                pass
 
         if orientation == 3:   img = img.transpose(Image.ROTATE_180)
         elif orientation == 6: img = img.transpose(Image.ROTATE_270)
@@ -57,6 +65,9 @@ class ImageResizer(Actor):
             width = int(scale * img.width)
             height = int(scale * img.height)
             resized = img.resize((width, height), Image.BICUBIC)
-            resized.save(outfile)
+            if exif:
+                resized.save(outfile, exif=exif)
+            else:
+                resized.save(outfile)
         else:
             shutil.copy(infile, outfile)

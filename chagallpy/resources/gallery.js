@@ -4,7 +4,9 @@ function go(id)
     if (element)
     {
         window.location = element.href;
+        return true;
     }
+    return false;
 }
 
 document.onkeydown = function(evt) {
@@ -33,4 +35,48 @@ document.onkeydown = function(evt) {
     }
 };
 
-// TODO: Add swipe
+var xDown = null;
+var xUp = null;
+
+function handleTouchStart(evt) {
+    xDown = evt.touches[0].clientX;
+};
+
+function handleTouchMove(evt) {
+    if (!xDown) return;
+    xUp = evt.touches[0].clientX;
+    var xDiff = xDown - xUp;
+
+    if (Math.abs(xDiff) > 20) {
+        var image = document.getElementById("image-itself");
+        image.style.opacity = "0.6";
+    }
+}
+
+function handleTouchEnd(evt) {
+    if (!xDown || !xUp) return;
+    var xDiff = xDown - xUp;
+
+    if (Math.abs(xDiff) > 20) {/*most significant*/
+        if ( xDiff > 0 ) {
+
+            go("right") || go("home");
+            /* left swipe */
+        } else {
+            go("left") || go("home");
+            /* right swipe */
+        }
+    }
+    else
+    {
+        var image = document.getElementById("image-itself");
+        image.style.opacity = "1.0";
+    }
+    /* reset values */
+    xDown = null;
+    xUp = null;
+}
+
+document.addEventListener('touchstart', handleTouchStart, false);
+document.addEventListener('touchmove', handleTouchMove, false);
+document.addEventListener('touchend', handleTouchEnd, false);
