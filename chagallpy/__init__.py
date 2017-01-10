@@ -14,7 +14,7 @@ def generate():
     from chagallpy.image_collector import ImageCollector
     from chagallpy.meta_data_reader import MetaDataReader
     from chagallpy.image_sorter import ImageSorter
-    from chagallpy.album_page_creator import AlbumPageCreator
+    from chagallpy.gallery_page_creator import GalleryPageCreator
     from chagallpy.image_page_creator import ImagePageCreator
     from chagallpy.resource_copy import ResourceCopy
     from chagallpy.gallery_info_reader import GalleryInfoReader
@@ -48,10 +48,10 @@ def generate():
     gallery_info_reader.inports["path_in"] += parser.outports["source_path"]
 
     # Create album page
-    album_creator = AlbumPageCreator(output_path)
-    album_creator.inports["images"] += gallery_info_reader.outports["images_out"]
-    album_creator.inports["gallery_info"] += gallery_info_reader.outports["gallery_info"]
-    album_creator.inports["output_path"] += parser.outports["output_path"]
+    gallery_creator = GalleryPageCreator(output_path)
+    gallery_creator.inports["images"] += gallery_info_reader.outports["images_out"]
+    gallery_creator.inports["gallery_info"] += gallery_info_reader.outports["gallery_info"]
+    gallery_creator.inports["output_path"] += parser.outports["output_path"]
 
     # Copy & resize all images
     image_resizer = ConstructorWrapper(ImageResizer, output_path=output_path, max_height=1600, max_width=1600)

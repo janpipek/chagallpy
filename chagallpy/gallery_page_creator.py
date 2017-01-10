@@ -4,11 +4,11 @@ import jinja2
 import codecs
 
 
-class AlbumPageCreator(Actor):
+class GalleryPageCreator(Actor):
     SIZE = 256
 
     def __init__(self, output_path):
-        super(AlbumPageCreator, self).__init__()
+        super(GalleryPageCreator, self).__init__()
         self.output_path = os.path.abspath(output_path)
         self.inports.append("images")
         self.inports.append("gallery_info")
