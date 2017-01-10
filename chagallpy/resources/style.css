@@ -24,6 +24,10 @@ h1
     font-size: 170%;
 }
 
+.gallery-page
+{
+    text-align: center;
+}
 
 /* Gallery page */
 .gallery-page .gallery-frame
