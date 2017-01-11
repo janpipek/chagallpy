@@ -10,7 +10,7 @@ setup(
     description='CHArming GALLEry in PYthon',
     long_description=open('README.md').read(),
     author='Jan Pipek',
-    author_email='jan DOT pipek AT gmail COM',
+    author_email='jan.pipek@gmail.com',
     url='https://github.com/janpipek/chagallpy',
     install_requires = [ 'wowp', 'pillow', "jinja2" ],
     entry_points = {
