@@ -17,7 +17,7 @@ chagall
 It finds all JPEG images in the current directory, then tries to read metadata about them
 and produces a gallery in subdirectory "build".
 
-Example gallery produced with chagallpy: <http://i.vzdusne.cz/mala_fatra_2013/>
+Example galleries produced with chagallpy: <http://i.vzdusne.cz/>
 
 ## Installation
 
