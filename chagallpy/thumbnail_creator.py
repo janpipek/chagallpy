@@ -4,24 +4,27 @@ from PIL import Image
 
 
 class ThumbnailCreator(Actor):
-    SIZE = 256
+    SIZE = 1
 
     def __init__(self, output_path):
         super(ThumbnailCreator, self).__init__(name="Thumbnail creator")
         self.output_path = os.path.abspath(output_path)
+        # self.inports.append("thumbnail_size")
         self.inports.append("infile")
         self.outports.append("outfile")
 
         # self.outports.append("image_out")
 
     def get_run_args(self):
-        args = (self.inports["infile"].pop(),)
+        args = (self.inports["infile"].pop(),) #, self.inport["thumbnail_size"].pop())
         kwargs = {"output_path": self.output_path}
         return args, kwargs
 
     @classmethod
     def run(cls, *args, **kwargs):
         infile = args[0]
+        # size = args[1]
+        # self.inports["thumbnail_size"].default = size   # Cache for later use
         outfile = os.path.splitext(infile)[0] + ".thumb.jpg"
         cls.create_thumbnail(infile, outfile)
         return {
