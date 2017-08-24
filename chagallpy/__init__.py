@@ -63,7 +63,7 @@ def generate():
     # Create all image pages
     image_page_creator = ConstructorWrapper(ImagePageCreator, output_path)
     image_page_map = Map(image_page_creator)
-    image_page_map.inports["inp"] += gallery_info_reader.outports["images_out"]
+    image_page_map.inports["image_in"] += gallery_info_reader.outports["images_out"]
 
     workflow = parser.get_workflow()
     images = workflow(argv=sys.argv)
