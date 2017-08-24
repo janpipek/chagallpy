@@ -27,6 +27,9 @@
                 , {{ image.place }}
                 {% endif %}
             </span>
+            {% if image.author %}
+                <span>© {{ image.author }}</span>
+            {% endif %}
             {% if image.exif and False %}
                 <span class="toolbar-container">
                     <!-- {{ image.exif_data }} -->

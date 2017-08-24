@@ -83,6 +83,10 @@ class ImageInfo(object):
             return datetime.datetime.strptime(exiftime, "%Y:%m:%d %H:%M:%S")
         ctime = int(os.path.getctime(self.path))
         return datetime.datetime.fromtimestamp(ctime)
+        
+    @property
+    def author(self):
+        return self.meta_data.get("author", None)
 
     @property
     def place(self):

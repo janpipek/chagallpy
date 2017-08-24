@@ -52,10 +52,16 @@ def generate():
     gallery_creator.inports["images"] += gallery_info_reader.outports["images_out"]
     gallery_creator.inports["gallery_info"] += gallery_info_reader.outports["gallery_info"]
     gallery_creator.inports["output_path"] += parser.outports["output_path"]
+    gallery_creator.inports["thumbnail_size"] += parser.outports["thumbnail_size"]
 
     # Copy & resize all images
     image_resizer = ConstructorWrapper(ImageResizer, output_path=output_path, max_height=1600, max_width=1600)
+    
     image_thumbnailer = ConstructorWrapper(ThumbnailCreator, output_path=output_path)
+    #def _pass_thumbnail_size(actor):
+    #    actor.inports["thumbnail_size"] += parser.outports["thumbnail_size"]
+    #image_thumbnailer.queue(_pass_thumbnail_size)
+    
     image_resizer_chain = ConstructorWrapper(Chain, "image_resizer_chain", [image_resizer, image_thumbnailer])
     image_resizer_map = Map(image_resizer_chain)
     image_resizer_map.inports["inp"] += gallery_info_reader.outports["images_out"]

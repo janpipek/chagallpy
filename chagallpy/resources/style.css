@@ -36,13 +36,13 @@ h1
     line-height: 1px;
     font-size: 0px;
     margin: auto;
+    text-align: left;
+    display: inline-block;
 }
 .gallery-page .gallery-frame a.thumb
 {
     display: inline-block;
     margin: 1px;
-    height: 256px;
-    width: 256px;
 }
 .gallery-page .gallery-frame a:hover img
 {
