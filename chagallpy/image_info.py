@@ -32,13 +32,16 @@ class ImageInfo(object):
         self.index = 0
         self.total_count = 0
 
+    def has_title(self):
+        return bool(self.meta_data.get("title"))
+
     @property
     def title(self):
-        if "title" in self.meta_data:
-            return self.meta_data["title"]
+        title = self.meta_data.get("title")
+        if not title:
+            return "[untitled]"
         else:
-            return self.basename
-
+            return title
 
     @property
     def basename(self):

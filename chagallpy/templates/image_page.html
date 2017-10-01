@@ -19,7 +19,7 @@
                 <span></span>
             {% endif %}
             <span>{{ image.index }}/{{image.total_count }}</span>
-            {% if image.title %}
+            {% if image.has_title() %}
                 <span>{{ image.title }}</span>
             {% endif %}
             <span>{{ image.date_time.strftime("%d/%m/%Y") -}}
