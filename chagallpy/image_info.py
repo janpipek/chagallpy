@@ -6,7 +6,7 @@ import re
 class ExifProxy(object):
     """Object accessing EXIF info in a friendly, @property-friendly way.
 
-    TODO: Work in progress
+    All properties are user-friendly strings
     """
     def __init__(self, a_dict):
         self._data = a_dict
@@ -16,6 +16,7 @@ class ExifProxy(object):
         model = self._data["Model"]
         if model == "6039Y":
             model = "Alcatel Idol 3"
+        model = model.replace("NIKON", "Nikon")
         return model
 
     @property
@@ -55,6 +56,8 @@ class ExifProxy(object):
             return 7.38
         elif re.match("Canon EOS \\d\\d\\dD", self.camera):
             return 1.6
+        elif re.match("Nikon D\\d0", self.camera):
+            return 1.5
         elif "Nexus 5X" in self.camera:
             return 5.49
         else:
