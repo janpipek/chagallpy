@@ -1,5 +1,6 @@
 import os
 import datetime
+import re
 
 
 class ExifProxy(object):
@@ -12,7 +13,66 @@ class ExifProxy(object):
 
     @property
     def camera(self):
-        return self._data["Model"]
+        model = self._data["Model"]
+        if model == "6039Y":
+            model = "Alcatel Idol 3"
+        return model
+
+    @property
+    def iso(self):
+        return self._data.get("ISOSpeedRatings")
+
+    @property
+    def aperture(self):
+        values = self._data.get("ApertureValue") or self._data.get("FNumber")
+        if values:
+            return "f/{0:.1f}".format(values[0] / values[1])
+        else:
+            return None
+
+    @property
+    def exposure(self):
+        values = self._data.get("ExposureTime")
+        if values:
+            value = values[0] / values[1]
+            if value < 0.02:
+                return "1/{0} s".format(int(1 / value))
+            elif value < 0.1:
+                return "1/{0:.1f} s".format(1 / value)
+            elif value < 10:
+                return "{0:.1f} s".format(value)
+            else:
+                return "{0} s".format(int(value))
+
+        else:
+            return None
+
+    @property
+    def crop_factor(self):
+        if "PowerShot G16" in self.camera:
+            return 4.598
+        elif self.camera == "Alcatel Idol 3":
+            return 7.38
+        elif re.match("Canon EOS \\d\\d\\dD", self.camera):
+            return 1.6
+        elif "Nexus 5X" in self.camera:
+            return 5.49
+        else:
+            return None
+
+
+    @property
+    def focal_length(self):
+        values = self._data.get("FocalLength")
+        if values:
+            value = values[0] / values[1]
+            if self.crop_factor:
+                return "{0:.1f} (~{1:.1f}) mm".format(value, value * self.crop_factor)
+            else:
+                return "{0:.1f} mm".format(value)
+        else:
+            return None
+
 
 
 class ImageInfo(object):
