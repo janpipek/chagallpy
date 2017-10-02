@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>{{ image.gallery_info.title }} :: {{ image.title }}</title>
     <link href="style.css" rel="stylesheet" />
-    <script src="gallery.js"></script>
 </head>
 <body class="image-page"><div class="image-toolbar">
             <a class='arrow' id='home' title="Home" href='index.html'>&#9632;</a>
@@ -30,17 +29,13 @@
             {% if image.author %}
                 <span>© {{ image.author }}</span>
             {% endif %}
-            {% if image.exif and False %}
-                <span class="toolbar-container">
-                    <!-- {{ image.exif_data }} -->
-                    <!-- TODO: Implement somehow -->
-                </span>
-            {% endif %}
         </div><img class="image-itself" src="{{ image.basename }}.jpg" id="image-itself"/>
         {% if image.exif %}
-            <span class="toolbar-container">
-                <!-- {{ image.exif_data }} -->
-            </span>
+            <div id="exif">
+               {{ image.exif.camera }} | ISO {{ image.exif.iso }} | {{ image.exif.aperture }} | {{image.exif.exposure }} | {{ image.exif.focal_length }}
+            </div>
         {% endif %}
+
+        <script src="gallery.js"></script>
 </body>
 </html>

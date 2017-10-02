@@ -9,6 +9,19 @@ function go(id)
     return false;
 }
 
+function toggleVisibility(element)
+{
+    if (element.style.display == "block")
+    {
+        element.style.display = "none";
+    }
+    else
+    {
+        element.style.display = "block";
+
+    }
+}
+
 document.onkeydown = function(evt) {
     evt = evt || window.event;
     switch (evt.keyCode) {
@@ -30,8 +43,11 @@ document.onkeydown = function(evt) {
             go("home");
             break;
         case 73: // i
-            //reserved
+            var exif = document.getElementById("exif");
+            toggleVisibility(exif);
+            document.cookie = "exif=" + exif.style.display + ";;path=/";
             break;
+
     }
 };
 
@@ -80,3 +96,8 @@ function handleTouchEnd(evt) {
 document.addEventListener('touchstart', handleTouchStart, false);
 document.addEventListener('touchmove', handleTouchMove, false);
 document.addEventListener('touchend', handleTouchEnd, false);
+
+if (document.cookie.split("; ").includes("exif=block"))
+{
+    document.getElementById("exif").style.display = "block";
+}
