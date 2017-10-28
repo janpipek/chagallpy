@@ -13,10 +13,16 @@ class ExifProxy(object):
 
     @property
     def camera(self):
-        model = self._data["Model"]
-        if model == "6039Y":
-            model = "Alcatel Idol 3"
-        model = model.replace("NIKON", "Nikon")
+        model = self._data.get("Model")
+        if model:
+            if model == "6039Y":
+                model = "Alcatel Idol 3"
+            elif model == "GT-N8010":
+                model = "Samsung Galaxy Note 10.1"
+            elif model == "GT-I8150":
+                model = "Samsung Galaxy W"
+            else:
+                model = model.replace("NIKON", "Nikon")
         return model
 
     @property
@@ -75,7 +81,6 @@ class ExifProxy(object):
                 return "{0:.1f} mm".format(value)
         else:
             return None
-
 
 
 class ImageInfo(object):
