@@ -1,7 +1,12 @@
-from wowp.components import Actor
-import os
-from PIL import Image
 import shutil
+import os
+
+from PIL import Image, ImageFilter, ImageEnhance
+
+from wowp.components import Actor
+
+ENABLE_SHARPEN = True
+SHARPNESS_FACTOR = 1.6    # 1.0=original, 0.0=blurred, 2.0=max.sharpness
 
 
 class ImageResizer(Actor):
@@ -51,9 +56,12 @@ class ImageResizer(Actor):
             except KeyError:
                 pass
 
-        if orientation == 3:   img = img.transpose(Image.ROTATE_180)
-        elif orientation == 6: img = img.transpose(Image.ROTATE_270)
-        elif orientation == 8: img = img.transpose(Image.ROTATE_90)
+        if orientation == 3:
+            img = img.transpose(Image.ROTATE_180)
+        elif orientation == 6:
+            img = img.transpose(Image.ROTATE_270)
+        elif orientation == 8:
+            img = img.transpose(Image.ROTATE_90)
 
         scale = 1.0
         if img.width > max_width:
@@ -65,6 +73,10 @@ class ImageResizer(Actor):
             width = int(scale * img.width)
             height = int(scale * img.height)
             resized = img.resize((width, height), Image.BICUBIC)
+            if ENABLE_SHARPEN:
+                enhancer = ImageEnhance.Sharpness(resized)
+                # resized = resized.filter(ImageFilter.SHARPEN)
+                resized = enhancer.enhance(SHARPNESS_FACTOR)
             if exif:
                 resized.save(outfile, exif=exif)
             else:
