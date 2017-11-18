@@ -7,6 +7,7 @@ from wowp.components import Actor
 
 ENABLE_SHARPEN = True
 SHARPNESS_FACTOR = 1.6    # 1.0=original, 0.0=blurred, 2.0=max.sharpness
+JPEG_QUALITY = 92
 
 
 class ImageResizer(Actor):
@@ -39,7 +40,7 @@ class ImageResizer(Actor):
         }
 
     @classmethod
-    def resize_image(cls, infile, outfile, max_width=1600, max_height=1600, preserve_exif=True, orientation=1, **kwargs):
+    def resize_image(cls, infile, outfile, max_width=1600, max_height=1600, preserve_exif=True, quality=JPEG_QUALITY, orientation=1, **kwargs):
         if os.path.isfile(outfile):
             print("Not resizing image {0}...".format(outfile))
             return    # Unless forced
@@ -73,13 +74,17 @@ class ImageResizer(Actor):
             width = int(scale * img.width)
             height = int(scale * img.height)
             resized = img.resize((width, height), Image.BICUBIC)
-            if ENABLE_SHARPEN:
-                enhancer = ImageEnhance.Sharpness(resized)
-                # resized = resized.filter(ImageFilter.SHARPEN)
-                resized = enhancer.enhance(SHARPNESS_FACTOR)
-            if exif:
-                resized.save(outfile, exif=exif)
-            else:
-                resized.save(outfile)
         else:
-            shutil.copy(infile, outfile)
+            resized = img
+
+        save_kwargs = {"quality": quality}
+
+        if ENABLE_SHARPEN:
+            enhancer = ImageEnhance.Sharpness(resized)
+            resized = enhancer.enhance(SHARPNESS_FACTOR)
+
+        if exif:
+            save_kwargs["exif"] = exif
+        
+        resized.save(outfile, **save_kwargs)
+        
