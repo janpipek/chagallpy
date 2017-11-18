@@ -15,12 +15,19 @@ class ExifProxy(object):
     def camera(self):
         model = self._data.get("Model")
         if model:
+            # Note: the selection of models is a little bit arbitrary...
             if model == "6039Y":
                 model = "Alcatel Idol 3"
             elif model == "GT-N8010":
                 model = "Samsung Galaxy Note 10.1"
             elif model == "GT-I8150":
                 model = "Samsung Galaxy W"
+            elif model.startswith("DiMAGE"):
+                model = "Konica " + model
+            elif model == "C4100Z,C4000Z":
+                model = "Olympus C4000Z"
+            elif model.startswith("Canon EOS"):
+                model = model.replace(" DIGITAL", "")
             else:
                 model = model.replace("NIKON", "Nikon")
         return model
@@ -64,6 +71,8 @@ class ExifProxy(object):
             return 1.6
         elif re.match("Nikon D\\d0", self.camera):
             return 1.5
+        elif self.camera == "Olympus C4000Z":
+            return 5
         elif "Nexus 5X" in self.camera:
             return 5.49
         else:
@@ -142,18 +151,24 @@ class ImageInfo(object):
 
         :rtype datetime.datetime
         """
-        if "date" in self.meta_data:
+        if "datetime" in self.meta_data:
+            try:
+                return datetime.datetime.strptime(self.meta_data["datetime"], "%d/%m/%Y %H:%M:%S")
+            except ValueError:
+                return datetime.datetime.strptime(self.meta_data["datetime"], "%d/%m/%Y %H:%M")
+        elif "date" in self.meta_data:
             return datetime.datetime.strptime(self.meta_data["date"], "%d/%m/%Y")
-        if "DateTimeOriginal" in self._exif_data:
+        elif "DateTimeOriginal" in self._exif_data:
             exiftime = self._exif_data["DateTimeOriginal"]
             if not isinstance(exiftime, str):
                 exiftime = exiftime[0]
             return datetime.datetime.strptime(exiftime, "%Y:%m:%d %H:%M:%S")
-        if "DateTime" in self._exif_data:
+        elif "DateTime" in self._exif_data:
             exiftime = self._exif_data["DateTime"]
             return datetime.datetime.strptime(exiftime, "%Y:%m:%d %H:%M:%S")
-        ctime = int(os.path.getctime(self.path))
-        return datetime.datetime.fromtimestamp(ctime)
+        else:
+            ctime = int(os.path.getctime(self.path))
+            return datetime.datetime.fromtimestamp(ctime)
         
     @property
     def author(self):
