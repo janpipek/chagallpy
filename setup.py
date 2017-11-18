@@ -12,14 +12,14 @@ setup(
     author='Jan Pipek',
     author_email='jan.pipek@gmail.com',
     url='https://github.com/janpipek/chagallpy',
-    install_requires = [ 'wowp', 'pillow', "jinja2" ],
-    entry_points = {
-        'console_scripts' : [
-             'chagall = chagallpy:generate'
+    install_requires=['wowp', 'pillow', "jinja2"],
+    entry_points={b
+        'console_scripts': [
+            'chagall = chagallpy:generate'
         ]
     },
-    include_package_data = True,
-    package_data = {
+    include_package_data=True,
+    package_data={
         'resources': ['*.*'],
         'templates': ['*.html']
     },

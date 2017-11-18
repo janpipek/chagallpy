@@ -1,7 +1,7 @@
 import shutil
 import os
 
-from PIL import Image, ImageFilter, ImageEnhance
+from PIL import Image, ImageEnhance
 
 from wowp.components import Actor
 
@@ -34,7 +34,8 @@ class ImageResizer(Actor):
         infile = image.path
         filename = image.basename + ".jpg"
         outfile = os.path.join(kwargs.get("output_path"), filename)
-        cls.resize_image(infile, outfile, max_width, max_height, orientation=image.exif_orientation)
+        cls.resize_image(infile, outfile, max_width, max_height,
+                         orientation=image.exif_orientation)
         return {
             "out_file": outfile
         }
@@ -85,6 +86,5 @@ class ImageResizer(Actor):
 
         if exif:
             save_kwargs["exif"] = exif
-        
+
         resized.save(outfile, **save_kwargs)
-        
