@@ -67,7 +67,7 @@ class ExifProxy(object):
             return 4.598
         elif self.camera == "Alcatel Idol 3":
             return 7.38
-        elif re.match("Canon EOS \\d\\d\\dD", self.camera):
+        elif re.match("Canon EOS \\d\\d\\d?D", self.camera):
             return 1.6
         elif re.match("Nikon D\\d0", self.camera):
             return 1.5
