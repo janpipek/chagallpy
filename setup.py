@@ -13,7 +13,7 @@ setup(
     author_email='jan.pipek@gmail.com',
     url='https://github.com/janpipek/chagallpy',
     install_requires=['wowp', 'pillow', "jinja2"],
-    entry_points={b
+    entry_points={
         'console_scripts': [
             'chagall = chagallpy:generate'
         ]
