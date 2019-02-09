@@ -3,7 +3,7 @@ import datetime
 import re
 
 
-class ExifProxy(object):
+class ExifProxy:
     """Object accessing EXIF info in a friendly, @property-friendly way.
 
     All properties are user-friendly strings
@@ -92,7 +92,7 @@ class ExifProxy(object):
             return None
 
 
-class ImageInfo(object):
+class ImageInfo:
     """Container for image information.
 
     Objects of this class are passed in the workflow.
