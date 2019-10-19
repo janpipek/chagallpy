@@ -12,7 +12,7 @@ setup(
     author='Jan Pipek',
     author_email='jan.pipek@gmail.com',
     url='https://github.com/janpipek/chagallpy',
-    install_requires=['wowp', 'pillow', "jinja2"],
+    install_requires=['wowp', 'pillow', "jinja2", "pyyaml", "click"],
     python_requires="~=3.5",
     entry_points={
         'console_scripts': [

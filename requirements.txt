@@ -1,3 +1,5 @@
 wowp
-jinja
+jinja2
 pillow
+pyyaml
+click
