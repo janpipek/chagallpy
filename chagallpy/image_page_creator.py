@@ -5,15 +5,15 @@ import codecs
 
 
 class ImagePageCreator(Actor):
-    def __init__(self, output_path):
+    def __init__(self):
         super(ImagePageCreator, self).__init__()
-        self.output_path = os.path.abspath(output_path)
         self.inports.append("image_in")
+        self.inports.append("output_path")
         self.outports.append("image_out")
 
     def get_run_args(self):
         args = (self.inports["image_in"].pop(),)
-        kwargs = {"output_path": self.output_path}
+        kwargs = {"output_path": self.inports["output_path"].pop()}
         return args, kwargs
 
     @classmethod

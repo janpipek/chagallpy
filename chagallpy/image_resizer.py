@@ -11,10 +11,10 @@ JPEG_QUALITY = 92
 
 
 class ImageResizer(Actor):
-    def __init__(self, output_path, max_height, max_width):
+    def __init__(self, max_height, max_width):
         super(ImageResizer, self).__init__()
-        self.output_path = output_path
         self.inports.append("image_in")
+        self.inports.append("output_path")
         self.max_width = max_width
         self.max_height = max_height
         self.outports.append("out_file")
@@ -23,7 +23,7 @@ class ImageResizer(Actor):
         return (
             (self.inports["image_in"].pop(),),
             {
-                "output_path": self.output_path,
+                "output_path": self.inports["output_path"].pop(),
                 "max_width": self.max_width,
                 "max_height": self.max_height,
             },

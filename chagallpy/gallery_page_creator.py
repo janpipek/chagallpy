@@ -5,9 +5,8 @@ import codecs
 
 
 class GalleryPageCreator(Actor):
-    def __init__(self, output_path):
+    def __init__(self):
         super(GalleryPageCreator, self).__init__()
-        self.output_path = os.path.abspath(output_path)
         self.inports.append("images")
         self.inports.append("gallery_info")
         self.inports.append("output_path")
