@@ -11,14 +11,14 @@ class ImageCollector(Actor):
         self.outports.append("images")
 
     def get_run_args(self):
-        return (self.inports["path"].pop(), ), {}
+        return (self.inports["path"].pop(),), {}
 
     @classmethod
     def run(cls, *args, **kwargs):
         path = args[0]
         files = reglob(path, ".*\.[Jj][Pp][Ee]?[Gg]$")
         images = [ImageInfo(f) for f in files]
-        return {"images" : images}
+        return {"images": images}
 
 
 def reglob(path, exp, invert=False):

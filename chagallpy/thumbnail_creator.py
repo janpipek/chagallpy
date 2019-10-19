@@ -16,7 +16,7 @@ class ThumbnailCreator(Actor):
         # self.outports.append("image_out")
 
     def get_run_args(self):
-        args = (self.inports["infile"].pop(),) #, self.inport["thumbnail_size"].pop())
+        args = (self.inports["infile"].pop(),)  # , self.inport["thumbnail_size"].pop())
         kwargs = {"output_path": self.output_path}
         return args, kwargs
 
@@ -27,15 +27,13 @@ class ThumbnailCreator(Actor):
         # self.inports["thumbnail_size"].default = size   # Cache for later use
         outfile = os.path.splitext(infile)[0] + ".thumb.jpg"
         cls.create_thumbnail(infile, outfile)
-        return {
-            "outfile": outfile
-        }
+        return {"outfile": outfile}
 
     @classmethod
     def create_thumbnail(cls, infile, outfile, **kwargs):
         if os.path.isfile(outfile):
             print("Not creating thumbnail {0}...".format(outfile))
-            return    # Unless forced
+            return  # Unless forced
         os.makedirs(os.path.dirname(outfile), exist_ok=True)
         print("Creating thumbnail {0}...".format(outfile))
 
@@ -50,4 +48,3 @@ class ThumbnailCreator(Actor):
         img = img.resize((width, height), Image.ANTIALIAS)
         img = img.crop((left, top, left + size, top + size))
         img.save(outfile)
-

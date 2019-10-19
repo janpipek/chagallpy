@@ -21,5 +21,5 @@ class ArgumentParser(Actor):
         return {
             "source_path": ".",
             "output_path": "./build",
-            "thumbnail_size": cls.SIZE
+            "thumbnail_size": cls.SIZE,
         }

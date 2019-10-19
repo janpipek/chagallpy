@@ -6,7 +6,7 @@ from PIL import Image, ImageEnhance
 from wowp.components import Actor
 
 ENABLE_SHARPEN = True
-SHARPNESS_FACTOR = 1.6    # 1.0=original, 0.0=blurred, 2.0=max.sharpness
+SHARPNESS_FACTOR = 1.6  # 1.0=original, 0.0=blurred, 2.0=max.sharpness
 JPEG_QUALITY = 92
 
 
@@ -20,11 +20,14 @@ class ImageResizer(Actor):
         self.outports.append("out_file")
 
     def get_run_args(self):
-        return (self.inports["image_in"].pop(),), {
-            "output_path": self.output_path,
-            "max_width": self.max_width,
-            "max_height": self.max_height
-        }
+        return (
+            (self.inports["image_in"].pop(),),
+            {
+                "output_path": self.output_path,
+                "max_width": self.max_width,
+                "max_height": self.max_height,
+            },
+        )
 
     @classmethod
     def run(cls, *args, **kwargs):
@@ -34,17 +37,26 @@ class ImageResizer(Actor):
         infile = image.path
         filename = image.basename + ".jpg"
         outfile = os.path.join(kwargs.get("output_path"), filename)
-        cls.resize_image(infile, outfile, max_width, max_height,
-                         orientation=image.exif_orientation)
-        return {
-            "out_file": outfile
-        }
+        cls.resize_image(
+            infile, outfile, max_width, max_height, orientation=image.exif_orientation
+        )
+        return {"out_file": outfile}
 
     @classmethod
-    def resize_image(cls, infile, outfile, max_width=1600, max_height=1600, preserve_exif=True, quality=JPEG_QUALITY, orientation=1, **kwargs):
+    def resize_image(
+        cls,
+        infile,
+        outfile,
+        max_width=1600,
+        max_height=1600,
+        preserve_exif=True,
+        quality=JPEG_QUALITY,
+        orientation=1,
+        **kwargs
+    ):
         if os.path.isfile(outfile):
             print("Not resizing image {0}...".format(outfile))
-            return    # Unless forced
+            return  # Unless forced
         os.makedirs(os.path.dirname(outfile), exist_ok=True)
         print("Resizing image {0}...".format(outfile))
 
@@ -54,7 +66,7 @@ class ImageResizer(Actor):
 
         if preserve_exif:
             try:
-                exif = img.info['exif']
+                exif = img.info["exif"]
             except KeyError:
                 pass
 

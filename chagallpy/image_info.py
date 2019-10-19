@@ -8,6 +8,7 @@ class ExifProxy:
 
     All properties are user-friendly strings
     """
+
     def __init__(self, a_dict):
         self._data = a_dict
 
@@ -78,7 +79,6 @@ class ExifProxy:
         else:
             return None
 
-
     @property
     def focal_length(self):
         values = self._data.get("FocalLength")
@@ -97,6 +97,7 @@ class ImageInfo:
 
     Objects of this class are passed in the workflow.
     """
+
     def __init__(self, path):
         self.path = path
         self._exif_data = {}
@@ -153,9 +154,13 @@ class ImageInfo:
         """
         if "datetime" in self.meta_data:
             try:
-                return datetime.datetime.strptime(self.meta_data["datetime"], "%d/%m/%Y %H:%M:%S")
+                return datetime.datetime.strptime(
+                    self.meta_data["datetime"], "%d/%m/%Y %H:%M:%S"
+                )
             except ValueError:
-                return datetime.datetime.strptime(self.meta_data["datetime"], "%d/%m/%Y %H:%M")
+                return datetime.datetime.strptime(
+                    self.meta_data["datetime"], "%d/%m/%Y %H:%M"
+                )
         elif "date" in self.meta_data:
             return datetime.datetime.strptime(self.meta_data["date"], "%d/%m/%Y")
         elif "DateTimeOriginal" in self._exif_data:
@@ -169,7 +174,7 @@ class ImageInfo:
         else:
             ctime = int(os.path.getctime(self.path))
             return datetime.datetime.fromtimestamp(ctime)
-        
+
     @property
     def author(self):
         return self.meta_data.get("author", None)
@@ -186,4 +191,4 @@ class ImageInfo:
             return 0
 
     def __repr__(self):
-        return ("ImageInfo('{0}')".format(self.path))
+        return "ImageInfo('{0}')".format(self.path)

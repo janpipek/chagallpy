@@ -11,7 +11,7 @@ class ExifDataReader(Actor):
 
     def get_run_args(self):
         image_info = self.inports["image_in"].pop()
-        return (image_info, ), {}
+        return (image_info,), {}
 
     @classmethod
     def run(cls, *args, **kwargs):
@@ -25,5 +25,4 @@ class ExifDataReader(Actor):
             }
         except:
             pass
-        return {"image_out" : image_info}
-
+        return {"image_out": image_info}

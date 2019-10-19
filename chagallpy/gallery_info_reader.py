@@ -28,7 +28,4 @@ class GalleryInfoReader(Actor):
         gallery_info = GalleryInfo(meta_data)
         for image_info in image_infos:
             image_info.gallery_info = gallery_info
-        return {
-            "gallery_info": gallery_info,
-            "images_out": image_infos
-        }
+        return {"gallery_info": gallery_info, "images_out": image_infos}
