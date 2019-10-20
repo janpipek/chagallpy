@@ -1,6 +1,7 @@
-from wowp.components import Actor
 import PIL
 import PIL.ExifTags
+
+from wowp.components import Actor
 
 
 class ExifDataReader(Actor):

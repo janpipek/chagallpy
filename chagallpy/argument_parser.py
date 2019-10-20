@@ -1,5 +1,7 @@
 from wowp.components import Actor
+
 from .thumbnail_creator import ThumbnailCreator
+
 
 class ArgumentParser(Actor):
     def __init__(self):

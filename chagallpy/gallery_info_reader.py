@@ -1,7 +1,10 @@
-from wowp.components import Actor
-import yaml
-import os
 import codecs
+import os
+
+import yaml
+
+from wowp.components import Actor
+
 from .gallery_info import GalleryInfo
 
 

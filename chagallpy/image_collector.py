@@ -1,6 +1,8 @@
-from wowp.components import Actor
 import os
 import re
+
+from wowp.components import Actor
+
 from .image_info import ImageInfo
 
 

@@ -1,6 +1,8 @@
-from wowp.components import Actor
 import os
+
 from PIL import Image
+
+from wowp.components import Actor
 
 
 class ThumbnailCreator(Actor):

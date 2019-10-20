@@ -1,7 +1,9 @@
-from wowp.components import Actor
-import os
-import jinja2
 import codecs
+import os
+
+import jinja2
+
+from wowp.components import Actor
 
 
 class GalleryPageCreator(Actor):
