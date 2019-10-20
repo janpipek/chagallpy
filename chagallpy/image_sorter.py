@@ -4,7 +4,10 @@ from wowp.components import Actor
 
 
 class ImageSorter(Actor):
-    """Actor sorting images based on best value for datetime."""
+    """Actor sorting images based on best value for datetime.
+
+    Each image_info is decorated with .previous, .next, .index and .total_count
+    """
     def __init__(self):
         super(ImageSorter, self).__init__()
         self.inports.append("images_in")

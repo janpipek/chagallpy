@@ -6,8 +6,9 @@ from wowp.components import Actor
 
 
 class ResourceCopy(Actor):
+    """Actor copying static resources to output directory."""
     def __init__(self):
-        super(ResourceCopy, self).__init__()
+        super(ResourceCopy, self).__init__(name="Resource copy")
         self.inports.append("path_in")
         self.outports.append("path_out")
 

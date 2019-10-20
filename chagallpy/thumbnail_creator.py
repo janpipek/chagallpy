@@ -7,6 +7,9 @@ from wowp.components import Actor
 
 
 class ThumbnailCreator(Actor):
+    """Actor that creates a thumbnail from an image.
+
+    The thumbnail will be in the same directory, only including 'thumb' in the name."""
     def __init__(self):
         super(ThumbnailCreator, self).__init__(name="Thumbnail creator")
         self.inports.append("infile")
@@ -27,7 +30,7 @@ class ThumbnailCreator(Actor):
         return {"outfile": outfile}
 
     @classmethod
-    def create_thumbnail(cls, infile, outfile, *, size):
+    def create_thumbnail(cls, infile: str, outfile: str, *, size: int) -> None:
         if os.path.isfile(outfile):
             logging.debug("Not creating thumbnail {0}...".format(outfile))
             return  # Unless forced

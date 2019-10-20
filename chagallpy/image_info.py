@@ -14,7 +14,7 @@ class ExifProxy:
         self._data = a_dict
 
     @property
-    def camera(self):
+    def camera(self) -> str:
         model = self._data.get("Model")
         if model:
             # Note: the selection of models is a little bit arbitrary...
@@ -35,11 +35,11 @@ class ExifProxy:
         return model
 
     @property
-    def iso(self):
+    def iso(self) -> str:
         return self._data.get("ISOSpeedRatings")
 
     @property
-    def aperture(self):
+    def aperture(self) -> Optional[str]:
         values = self._data.get("ApertureValue") or self._data.get("FNumber")
         if values:
             return "f/{0:.1f}".format(values[0] / values[1])
@@ -47,7 +47,7 @@ class ExifProxy:
             return None
 
     @property
-    def exposure(self):
+    def exposure(self) -> Optional[str]:
         values = self._data.get("ExposureTime")
         if values:
             value = values[0] / values[1]
@@ -64,7 +64,7 @@ class ExifProxy:
             return None
 
     @property
-    def crop_factor(self):
+    def crop_factor(self) -> Optional[float]:
         if "PowerShot G16" in self.camera:
             return 4.598
         elif self.camera == "Alcatel Idol 3":

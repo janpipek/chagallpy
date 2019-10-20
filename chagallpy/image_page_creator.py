@@ -8,6 +8,7 @@ from wowp.components import Actor
 
 
 class ImagePageCreator(Actor):
+    """Actor creating a HTML page for an image."""
     def __init__(self):
         super(ImagePageCreator, self).__init__()
         self.inports.append("image_in")

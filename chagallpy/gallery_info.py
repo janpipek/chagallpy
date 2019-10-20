@@ -1,4 +1,5 @@
 class GalleryInfo:
+    """Meta-data about a gallery."""
     def __init__(self, meta_data: dict):
         self.meta_data = meta_data
 

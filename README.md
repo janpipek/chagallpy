@@ -11,11 +11,18 @@ standard (whatever reasonable definition of "standard") keyboard shortcuts.
 Just run this command in the directory with photos:
 
 ```
-chagall
+Usage: chagall [OPTIONS]
+
+Options:
+  -i, --input TEXT  (default .)
+  -o, --output TEXT  (default ./build)
+  -S, --image-size INTEGER
+  -T, --thumbnail-size INTEGER
+  -v, --verbose
 ```
 
-It finds all JPEG images in the current directory, then tries to read metadata about them
-and produces a gallery in subdirectory "build".
+It finds all JPEG images in a current directory, then tries to read metadata about them
+and produces a gallery in output directory.
 
 Example galleries produced with chagallpy: <http://i.vzdusne.cz/>
 
