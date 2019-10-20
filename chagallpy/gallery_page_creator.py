@@ -1,4 +1,5 @@
 import codecs
+import logging
 import os
 
 import jinja2
@@ -41,7 +42,7 @@ class GalleryPageCreator(Actor):
 
         template = env.get_template("index.html")
 
-        print("Creating album page index.html...")
+        logging.debug(f"Creating album page {outfile}...")
 
         with codecs.open(outfile, "w", encoding="utf-8") as fout:
             fout.write(

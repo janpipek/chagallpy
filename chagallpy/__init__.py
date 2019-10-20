@@ -1,15 +1,31 @@
-__version__ = str("0.1.4")
+import logging
 import os
-import sys
+import warnings
 
 import click
+
+
+__version__ = str("0.1.5")
 
 
 @click.command()
 @click.option("--input", "-i", default=".")
 @click.option("--output", "-o", default=os.path.join(".", "build"))
-def generate(**kwargs):
-    from wowp.actors.experimental import Chain
+@click.option("--image-size", "-S", type=int, default=1600)
+@click.option("--thumbnail-size", "-T", type=int, default=256)
+@click.option("--verbose", "-v", count=True)
+# @click.option("--static-path", type=str, default=None)
+def generate(verbose, **kwargs):
+    if verbose == 1:
+        logging.basicConfig(level=logging.INFO)
+    elif verbose == 2:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.WARNING)
+
+    warnings.filterwarnings("ignore")
+
+    from wowp.actors.special import Chain
     from wowp.actors.mapreduce import Map
     from wowp.util import ConstructorWrapper
 
@@ -27,8 +43,6 @@ def generate(**kwargs):
     from chagallpy.image_resizer import ImageResizer
 
     parser = ArgumentParser()
-
-    output_path = "./build"  # TODO: remove
 
     # Do the initial setup
     resource_copy = ResourceCopy()
@@ -62,18 +76,15 @@ def generate(**kwargs):
     gallery_creator.inports["thumbnail_size"] += parser.outports["thumbnail_size"]
 
     # Copy & resize all images
-    image_resizer = ConstructorWrapper(
-        ImageResizer, max_height=1600, max_width=1600
-    )
-
-    image_thumbnailer = ConstructorWrapper(ThumbnailCreator)
-
-    image_resizer_chain = ConstructorWrapper(
-        Chain, "image_resizer_chain", [image_resizer, image_thumbnailer]
-    )
-    image_resizer_map = Map(image_resizer_chain, single_value_ports=("output_path", ))
-    image_resizer_map.inports["image_in"] += gallery_info_reader.outports["images_out"]
+    image_resizer_map = Map(ConstructorWrapper(ImageResizer), single_value_ports=("output_path", "image_size"))
+    image_resizer_map.inports["image_in"] += sorter.outports["images_out"]
+    image_resizer_map.inports["image_size"] += parser.outports["image_size"]
     image_resizer_map.inports["output_path"] += parser.outports["output_path"]
+
+    # Make thumbnail from resized images
+    image_thumbnailer_map = Map(ConstructorWrapper(ThumbnailCreator), single_value_ports=("thumbnail_size",))
+    image_thumbnailer_map.inports["thumbnail_size"] += parser.outports["thumbnail_size"]
+    image_thumbnailer_map.inports["infile"] += image_resizer_map.outports["out_file"]
 
     # Create all image pages
     image_page_creator = ConstructorWrapper(ImagePageCreator)

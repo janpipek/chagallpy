@@ -36,6 +36,7 @@ class ImagePageCreator(Actor):
         env = jinja2.Environment(loader=jinja_loader)
 
         template = env.get_template("image_page.html")
+        logging.debug(f"Creating image page {outfile}")
 
         with codecs.open(outfile, "w", encoding="utf-8") as fout:
             fout.write(template.render(image=image))

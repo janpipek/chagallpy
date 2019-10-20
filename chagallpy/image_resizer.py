@@ -1,5 +1,5 @@
+import logging
 import os
-import shutil
 
 from PIL import Image, ImageEnhance
 
@@ -11,21 +11,21 @@ JPEG_QUALITY = 92
 
 
 class ImageResizer(Actor):
-    def __init__(self, max_height, max_width):
+    def __init__(self):
         super(ImageResizer, self).__init__()
         self.inports.append("image_in")
+        self.inports.append("image_size")
         self.inports.append("output_path")
-        self.max_width = max_width
-        self.max_height = max_height
         self.outports.append("out_file")
 
     def get_run_args(self):
+        max_size = self.inports["image_size"].pop()
         return (
             (self.inports["image_in"].pop(),),
             {
                 "output_path": self.inports["output_path"].pop(),
-                "max_width": self.max_width,
-                "max_height": self.max_height,
+                "max_width": max_size,
+                "max_height": max_size,
             },
         )
 
@@ -38,7 +38,7 @@ class ImageResizer(Actor):
         filename = image.basename + ".jpg"
         outfile = os.path.join(kwargs.get("output_path"), filename)
         cls.resize_image(
-            infile, outfile, max_width, max_height, orientation=image.exif_orientation
+            infile, outfile, max_width=max_width, max_height=max_height, orientation=image.exif_orientation
         )
         return {"out_file": outfile}
 
@@ -46,19 +46,19 @@ class ImageResizer(Actor):
     def resize_image(
         cls,
         infile,
-        outfile,
-        max_width=1600,
-        max_height=1600,
-        preserve_exif=True,
+        outfile, *,
+        max_width: int,
+        max_height: int,
+        preserve_exif: bool = True,
         quality=JPEG_QUALITY,
         orientation=1,
         **kwargs
     ):
         if os.path.isfile(outfile):
-            print("Not resizing image {0}...".format(outfile))
+            logging.debug(f"Not resizing image {outfile}...")
             return  # Unless forced
         os.makedirs(os.path.dirname(outfile), exist_ok=True)
-        print("Resizing image {0}...".format(outfile))
+        logging.info(f"Resizing image {outfile}...")
 
         img = Image.open(infile)
 

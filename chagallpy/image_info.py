@@ -1,6 +1,7 @@
 import datetime
 import os
 import re
+from typing import Optional
 
 
 class ExifProxy:
@@ -72,6 +73,8 @@ class ExifProxy:
             return 1.6
         elif re.match("Nikon D\\d0", self.camera):
             return 1.5
+        elif re.search("Canon EOS 6D", self.camera):
+            return 1.0
         elif self.camera == "Olympus C4000Z":
             return 5
         elif "Nexus 5X" in self.camera:
@@ -84,7 +87,7 @@ class ExifProxy:
         values = self._data.get("FocalLength")
         if values:
             value = values[0] / values[1]
-            if self.crop_factor:
+            if self.crop_factor and self.crop_factor != 1.0:
                 return "{0:.1f} (~{1:.1f}) mm".format(value, value * self.crop_factor)
             else:
                 return "{0:.1f} mm".format(value)
@@ -110,11 +113,11 @@ class ImageInfo:
         self.index = 0
         self.total_count = 0
 
-    def has_title(self):
+    def has_title(self) -> bool:
         return bool(self.meta_data.get("title"))
 
     @property
-    def title(self):
+    def title(self) -> str:
         title = self.meta_data.get("title")
         if not title:
             return "[untitled]"
@@ -122,15 +125,12 @@ class ImageInfo:
             return title
 
     @property
-    def basename(self):
+    def basename(self) -> str:
         return os.path.splitext(os.path.basename(self.path))[0].lower()
 
     @property
-    def exif_data(self):
-        """Original EXIF data.
-
-        :rtype: dict
-        """
+    def exif_data(self) -> dict:
+        """Original EXIF data."""
         return self._exif_data
 
     @exif_data.setter
@@ -147,11 +147,8 @@ class ImageInfo:
         self._meta_data = value
 
     @property
-    def date_time(self):
-        """Best available data time info.
-
-        :rtype datetime.datetime
-        """
+    def date_time(self) -> datetime.datetime:
+        """Best available data time info."""
         if "datetime" in self.meta_data:
             try:
                 return datetime.datetime.strptime(
@@ -176,11 +173,11 @@ class ImageInfo:
             return datetime.datetime.fromtimestamp(ctime)
 
     @property
-    def author(self):
+    def author(self) -> Optional[str]:
         return self.meta_data.get("author", None)
 
     @property
-    def place(self):
+    def place(self) -> Optional[str]:
         return self.meta_data.get("place", None)
 
     @property

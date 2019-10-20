@@ -1,4 +1,5 @@
 import codecs
+import logging
 import os
 
 import yaml
@@ -24,10 +25,11 @@ class GalleryInfoReader(Actor):
         path = args[0]
         image_infos = args[1]
         yaml_path = os.path.join(path, "gallery.yaml")
+        logging.debug(f"Reading gallery info from {yaml_path}")
         meta_data = {}
         if os.path.isfile(yaml_path):
             with codecs.open(yaml_path, "r", encoding="utf-8") as yaml_f:
-                meta_data.update(yaml.load(yaml_f))
+                meta_data.update(yaml.load(yaml_f, Loader=yaml.FullLoader))
         gallery_info = GalleryInfo(meta_data)
         for image_info in image_infos:
             image_info.gallery_info = gallery_info

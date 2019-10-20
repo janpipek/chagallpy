@@ -1,6 +1,8 @@
-from wowp.components import Actor
+import logging
 import os
 import shutil
+
+from wowp.components import Actor
 
 
 class ResourceCopy(Actor):
@@ -20,9 +22,9 @@ class ResourceCopy(Actor):
             os.path.dirname(os.path.abspath(__file__)), "resources"
         )
         files = os.listdir(resource_dir)
-        print("Copying:", files)
+        logging.info(f"Copying: {files}")
         for f in files:
             in_path = os.path.join(resource_dir, f)
-            print("Copying:", in_path, "to", output_path)
+            logging.debug(f"Copying: {in_path} to {output_path}")
             shutil.copy(in_path, output_path)
         return {"path_out": output_path}

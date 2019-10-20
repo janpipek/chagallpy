@@ -1,3 +1,5 @@
+import logging
+
 import PIL
 import PIL.ExifTags
 
@@ -24,6 +26,6 @@ class ExifDataReader(Actor):
                 for k, v in img._getexif().items()
                 if k in PIL.ExifTags.TAGS
             }
-        except:
-            pass
+        except Exception:
+            logging.debug(f"EXIF data not found for image {image_info.path}")
         return {"image_out": image_info}

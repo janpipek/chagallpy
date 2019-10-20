@@ -1,7 +1,10 @@
+import logging
+
 from wowp.components import Actor
 
 
 class ImageSorter(Actor):
+    """Actor sorting images based on best value for datetime."""
     def __init__(self):
         super(ImageSorter, self).__init__()
         self.inports.append("images_in")
@@ -13,6 +16,7 @@ class ImageSorter(Actor):
 
     @classmethod
     def run(cls, *args, **kwargs):
+        logging.debug("Sorting images...")
         images = args[0]
         images = sorted(images, key=lambda i: i.date_time)
         for index, image in enumerate(images):
