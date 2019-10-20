@@ -1,5 +1,5 @@
-import shutil
 import os
+import shutil
 
 from PIL import Image, ImageEnhance
 

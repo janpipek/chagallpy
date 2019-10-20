@@ -1,5 +1,7 @@
+import logging
 import os
 import re
+from typing import List, Tuple, Any, Dict
 
 from wowp.components import Actor
 
@@ -7,6 +9,7 @@ from .image_info import ImageInfo
 
 
 class ImageCollector(Actor):
+    """Actor that finds all JPEG images in a directory."""
     def __init__(self):
         super(ImageCollector, self).__init__(name="ImageCollector")
         self.inports.append("path")
@@ -16,16 +19,18 @@ class ImageCollector(Actor):
         return (self.inports["path"].pop(),), {}
 
     @classmethod
-    def run(cls, *args, **kwargs):
+    def run(cls, *args, **kwargs) :
         path = args[0]
-        files = reglob(path, ".*\.[Jj][Pp][Ee]?[Gg]$")
+        files = reglob(path, r".*\.[Jj][Pp][Ee]?[Gg]$")
         images = [ImageInfo(f) for f in files]
+        logging.info(f"Found {len(images)} images.")
         return {"images": images}
 
 
-def reglob(path, exp, invert=False):
+def reglob(path: str, exp: str, invert: bool = False) -> List[str]:
     """glob.glob() style searching which uses regex
 
+    :param path: Directory where to look for files
     :param exp: Regex expression for filename
     :param invert: Invert match to non matching files
 
@@ -40,5 +45,5 @@ def reglob(path, exp, invert=False):
     else:
         res = [f for f in os.listdir(path) if not m.match(f)]
 
-    res = map(lambda x: os.path.join(path, x), res)
+    res = [os.path.join(path, x) for x in res]
     return res
