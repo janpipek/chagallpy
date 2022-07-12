@@ -4,7 +4,7 @@ import chagallpy
 
 setup(
     name='chagallpy',
-    version=chagallpy.__version__,
+    version="0.1.6",
     packages=find_packages(),
     license='MIT',
     description='CHArming GALLery in PYthon',
@@ -17,7 +17,7 @@ setup(
     python_requires="~=3.6",
     entry_points={
         'console_scripts': [
-            'chagall = chagallpy:generate'
+            'chagall = chagallpy.cli:generate'
         ]
     },
     include_package_data=True,
