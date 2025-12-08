@@ -34,7 +34,7 @@ class ImagePageCreator(Actor):
         basedir = os.path.dirname(os.path.abspath(__file__))
 
         jinja_loader = jinja2.FileSystemLoader(os.path.join(basedir, "templates"))
-        env = jinja2.Environment(loader=jinja_loader)
+        env = jinja2.Environment(loader=jinja_loader, autoescape=jinja2.select_autoescape())
 
         template = env.get_template("image_page.html")
         logging.debug(f"Creating image page {outfile}")
